@@ -1,0 +1,3 @@
+[submodule "Python_Notes/Complete-Python-3-Bootcamp"]
+	path = Python_Notes/Complete-Python-3-Bootcamp
+	url = git@github.com:KevinSonggg/Complete-Python-3-Bootcamp.git
