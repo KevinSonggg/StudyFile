@@ -11,3 +11,6 @@
 ### Python
 1. Regular Expression [Link](https://docs.python.org/3/howto/regex.html)
 2. `requests` package for API [Link](http://docs.python-requests.org/en/master/user/quickstart/)
+
+### R
+1. Regular Expression [Link](http://r4ds.had.co.nz/strings.html)
