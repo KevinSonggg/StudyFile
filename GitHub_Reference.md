@@ -10,7 +10,7 @@
 
 ### Python
 1. Regular Expression [Link](https://docs.python.org/3/howto/regex.html)
-  * Practice [Link](https://www.w3resource.com/python-exercises/re/)
+   * Practice [Link](https://www.w3resource.com/python-exercises/re/)
 2. `requests` package for API [Link](http://docs.python-requests.org/en/master/user/quickstart/)
 
 ### R
