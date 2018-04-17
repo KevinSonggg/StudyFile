@@ -12,6 +12,8 @@
 1. Regular Expression [Link](https://docs.python.org/3/howto/regex.html)
 * Python RE Practice [Link](https://www.w3resource.com/python-exercises/re/)
 * `RE` Package in Python [Link](https://docs.python.org/3/library/re.html)
+* `RE` Package explanation [Link](https://www.machinelearningplus.com/python/python-regex-tutorial-examples/)
+
 2. `requests` package for API [Link](http://docs.python-requests.org/en/master/user/quickstart/)
 
 ### R
