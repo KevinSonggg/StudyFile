@@ -16,6 +16,8 @@
 
 2. `requests` package for API [Link](http://docs.python-requests.org/en/master/user/quickstart/)
 
+3. `numpy` package universal functions [Link](https://docs.scipy.org/doc/numpy-1.14.0/reference/ufuncs.html)
+
 ### R
 1. Regular Expression [Link](http://r4ds.had.co.nz/strings.html) [Link](http://uc-r.github.io/regex)
 
