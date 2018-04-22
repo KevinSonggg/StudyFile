@@ -19,6 +19,9 @@
 
 3. `numpy` package universal functions [Link](https://docs.scipy.org/doc/numpy-1.14.0/reference/ufuncs.html)
 
+4. `Pandas` package documentation [Link](https://pandas.pydata.org/pandas-docs/stable/index.html)
+  * API function [Link](https://pandas.pydata.org/pandas-docs/stable/api.html)
+
 ### R
 1. Regular Expression [Link](http://r4ds.had.co.nz/strings.html) [Link](http://uc-r.github.io/regex)
 
