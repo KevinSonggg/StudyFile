@@ -11,16 +11,16 @@
 
 ### Python
 1. Regular Expression [Link](https://docs.python.org/3/howto/regex.html)
-* Python RE Practice [Link](https://www.w3resource.com/python-exercises/re/)
-* `RE` Package in Python [Link](https://docs.python.org/3/library/re.html)
-* `RE` Package explanation [Link](https://www.machinelearningplus.com/python/python-regex-tutorial-examples/)
+   * Python RE Practice [Link](https://www.w3resource.com/python-exercises/re/)
+   * `RE` Package in Python [Link](https://docs.python.org/3/library/re.html)
+   * `RE` Package explanation [Link](https://www.machinelearningplus.com/python/python-regex-tutorial-examples/)
 
 2. `requests` package for API [Link](http://docs.python-requests.org/en/master/user/quickstart/)
 
 3. `numpy` package universal functions [Link](https://docs.scipy.org/doc/numpy-1.14.0/reference/ufuncs.html)
 
 4. `Pandas` package documentation [Link](https://pandas.pydata.org/pandas-docs/stable/index.html)
-  * API function [Link](https://pandas.pydata.org/pandas-docs/stable/api.html)
+   * API function [Link](https://pandas.pydata.org/pandas-docs/stable/api.html)
 
 ### R
 1. Regular Expression [Link](http://r4ds.had.co.nz/strings.html) [Link](http://uc-r.github.io/regex)
