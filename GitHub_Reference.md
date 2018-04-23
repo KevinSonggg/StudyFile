@@ -21,6 +21,8 @@
 
 4. `Pandas` package documentation [Link](https://pandas.pydata.org/pandas-docs/stable/index.html)
    * API function [Link](https://pandas.pydata.org/pandas-docs/stable/api.html)
+   
+5. `datetime` introduction [Link](http://www.pythonforbeginners.com/basics/python-datetime-time-examples)
 
 ### R
 1. Regular Expression [Link](http://r4ds.had.co.nz/strings.html) [Link](http://uc-r.github.io/regex)
