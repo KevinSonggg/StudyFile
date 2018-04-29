@@ -24,6 +24,8 @@
    
 5. `datetime` introduction [Link](http://www.pythonforbeginners.com/basics/python-datetime-time-examples)
    * datetime documentation [Link](https://docs.python.org/3.2/library/datetime.html)
+   
+6. Python built-in function [Link](https://docs.python.org/2/library/functions.html)
 
 ### R
 1. Regular Expression [Link](http://r4ds.had.co.nz/strings.html) [Link](http://uc-r.github.io/regex)
