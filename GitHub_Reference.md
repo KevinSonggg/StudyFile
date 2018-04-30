@@ -5,6 +5,7 @@
 2. Move whole Git repository [Link](https://developer.atlassian.com/blog/2016/01/totw-copying-a-full-git-repo/)
 3. Push files to Git repository [Link](https://help.github.com/articles/adding-an-existing-project-to-github-using-the-command-line/)
 4. Git pull merge problem [Link](https://stackoverflow.com/questions/14046122/github-locks-up-mac-terminal-when-using-pull-command/34895296)
+  * Git Merge comment on terminal [Link](https://unix.stackexchange.com/questions/181280/how-to-exit-a-git-merge-asking-for-commit-message)
 
 ### GitHub Markdown
 1. GitHub MD CheatSheet [Link](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet)
