@@ -46,9 +46,8 @@
 6. Python built-in function [Link](https://docs.python.org/2/library/functions.html)
 
 ### R
-1. Regular Expression [Link](http://r4ds.had.co.nz/strings.html) [Link](http://uc-r.github.io/regex)
-2. Reporting layout [Link](https://www.statmethods.net/advgraphs/layout.html)
-)
+1. Regular Expression [Link](http://r4ds.had.co.nz/strings.html)
+2. Reporting layout [Link](https://www.statmethods.net/advgraphs/layout.html) [Link](http://www.thertrader.com/2013/10/18/trading-strategies-performance-reporting-with-r-and-knitr/)
 
 
 ### API
