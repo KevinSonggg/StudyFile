@@ -30,6 +30,7 @@
 
 ### R
 1. Regular Expression [Link](http://r4ds.had.co.nz/strings.html) [Link](http://uc-r.github.io/regex)
+2. Reporting layout [Link](https://www.statmethods.net/advgraphs/layout.html)
 
 ### API
 1. URL API [Link](https://github.com/gruns/furl/blob/master/API.md)
