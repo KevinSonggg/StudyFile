@@ -35,3 +35,6 @@
 
 ### API
 1. URL API [Link](https://github.com/gruns/furl/blob/master/API.md)
+
+### Other
+1. Jupyter Notebook Default Path Change [Link](https://stackoverflow.com/questions/35254852/how-to-change-the-jupyter-start-up-folder)
