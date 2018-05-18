@@ -36,6 +36,9 @@
 ### API
 1. URL API [Link](https://github.com/gruns/furl/blob/master/API.md)
 
+### Terminal / CMD line
+1. Python -m command-line flag [Link](https://stackoverflow.com/questions/22241420/execution-of-python-code-with-m-option-or-not)
+
 ### MongoDB
 1. MongoDB query basics: Find by id and other attributes [Link](https://specify.io/how-tos/find-documents-in-mongodb-using-the-mongo-shell)
 
