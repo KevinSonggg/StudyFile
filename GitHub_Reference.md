@@ -36,5 +36,9 @@
 ### API
 1. URL API [Link](https://github.com/gruns/furl/blob/master/API.md)
 
+### MongoDB
+1. MongoDB query basics: Find by id and other attributes [Link](https://specify.io/how-tos/find-documents-in-mongodb-using-the-mongo-shell)
+
 ### Other
 1. Jupyter Notebook Default Path Change [Link](https://stackoverflow.com/questions/35254852/how-to-change-the-jupyter-start-up-folder)
+
