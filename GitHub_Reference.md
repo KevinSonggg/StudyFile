@@ -30,6 +30,7 @@
 
 ### R
 1. Regular Expression [Link](http://r4ds.had.co.nz/strings.html)
+* Expression Reference (Universal Apply) [Link](https://docs.microsoft.com/en-us/dotnet/standard/base-types/regular-expression-language-quick-reference)
 2. Reporting layout [Link](https://www.statmethods.net/advgraphs/layout.html) [Link](http://www.thertrader.com/2013/10/18/trading-strategies-performance-reporting-with-r-and-knitr/)
 
 
