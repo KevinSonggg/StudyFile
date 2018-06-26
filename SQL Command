@@ -1,0 +1,23 @@
+
+/****** Script for SelectTopNRows command from SSMS  ******/
+SELECT 
+	a.AccountId,
+	a.LoanNumber,
+	b.LoanNumber AS Next_Loan,
+	a.ActualFundedDateTime,
+	a.LimitOfferedAmt,
+	a.LimitSelectedAmt
+	
+FROM EIS2.LOAN.LOAN a
+OUTER APPLY
+	(
+		SELECT TOP 1
+			b.LoanNumber
+		FROM 
+			EIS2.LOAN.LOAN b
+		WHERE a.AccountId = b.AccountId
+		AND a.LoanNumber <> b.LoanNumber 
+		ORDER BY LoanNumber
+	) b
+WHERE PortfolioId = 10
+ORDER BY AccountId
