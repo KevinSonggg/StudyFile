@@ -1,5 +1,5 @@
 ### Cros Apply
-
+### User Case 1: Track next records within same category (AcctId, LoanId etc)
 /****** Script for SelectTopNRows command from SSMS  ******/
 SELECT 
 	a.AccountId,
