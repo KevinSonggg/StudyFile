@@ -1,1 +1,184 @@
+########## Dialer CSV file combine R #########
+## Import packages
+library(dplyr)     ## Data manipulation package
+library(foreign)   ## Install package foreign
+library(stringr)   ## Subtract part of string
 
+## Set working directory
+setwd("//crpwacitsdfsr01/Department/Loan Operations/dialer_files/JOR")
+
+#list file names
+
+file_list <- data.frame(file_name = list.files(pattern="*\\d+.csv")) %>%
+  mutate(file_type = str_match(file_name, "_(.*?)_")[,2], ## () here means match the whole patterns but only return value within that parentheses
+         file_date = str_match(file_name,"\\d+"),
+         file_year = strtoi(str_match(file_name,"[0-9]{4}")),
+         file_month = strtoi(str_match(file_name,"[0-9]{4}[0]*([1-9]{1,2}[0]*)[0-9]{2}.csv")[,2]),
+         file_day = strtoi(str_match(file_name,"[0-9]{6}[0]*([1-9]{1,2}[0]*).csv")[,2])
+  )
+
+## Import & combine files 
+Jora_Collection <- data.frame(loan_series_number = integer(),
+                           customer_name = integer(),
+                           loan_balance = numeric(),
+                           cure_amount = numeric(),
+                           loan_series_create_date = integer(),
+                           last_payment_date = factor(),
+                           last_payment_amount = numeric(),
+                           payment_due_date = factor(),
+                           days_past_due = integer(),
+                           phone_1_Type = factor(),
+                           phone_1 = numeric(),
+                           phone_2_Type = factor(),
+                           phone_2 = numeric(),
+                           phone_3_Type = factor(),
+                           phone_3 = numeric(),
+                           AcceptableStartTime = factor(),
+                           AcceptableEndTime = factor(),
+                           TimeZone = factor(),
+                           Zipcode = integer())
+
+for (i in 1:nrow(file_list)){
+  temp <- read.csv(file=toString(file_list[i,1]),header = TRUE) %>%
+    mutate(file_category = file_list[i,2],
+           file_date = as.Date(paste(file_list[i,4],file_list[i,5],file_list[i,6],sep='-')))
+  
+  Jora_Collection <- rbind(Jora_Collection,temp) 
+}
+
+Jora_Collection[is.na(Jora_Collection)] <- " "
+
+
+## Output Dialr data
+write.csv(Jora_Collection,"//thinksas.think.local/SAS Data Files/Portfolio Mgmt/Jora Credit/Internal/JORA Excel Dashboard/2_Input/Jora Dialr/Jora_Dialr_Input.csv",row.names=FALSE)
+
+
+
+###---------------------------------------Returned Files------------------------------------------###
+setwd("//crpwacitsdfsr01/Department/Loan Operations/dialer_files/JOR/ReturnFiles/Archive")
+
+#list file name
+return_list <- data.frame(file_name = list.files(pattern="_Outbound_\\d+.csv")) %>%
+  mutate(file_type = str_match(file_name, "_.*?_(.*?)_")[,2],
+         file_year = strtoi(paste("20",str_match(file_name,"_[0-9]{4}.*?([0-9]{2})\\.csv$")[,2],sep="")),
+         file_month = strtoi(str_match(str_match(file_name,"_([0-9]{2})")[,2],"[0]*([0-9]*)")[,2]),
+         file_day = strtoi(str_match(str_match(file_name,"[0-9]{2}([0-9]{2})")[,2],"[0]*([0-9]*)")[,2])
+  )
+
+## Import & combine files 
+Jora_Dialr_Return <- data.frame(Loan_Series_Number = integer(),
+                              Customer_Name = factor(),
+                              ZipCode = integer(),
+                              Call_Date = factor(),
+                              Phone_Number = numeric(),
+                              Phone_Type = factor(),
+                              Call_Time = factor(),
+                              Call_Result = factor()
+                              )
+
+for (i in 1:nrow(return_list)){
+  temp <- read.csv(file=toString(return_list[i,1]),header = TRUE) %>%
+    mutate(file_category = return_list[i,2],
+           file_date = as.Date(paste(return_list[i,3],return_list[i,4],return_list[i,4],sep='-'))
+           )
+  
+  Jora_Dialr_Return <- rbind(Jora_Dialr_Return,temp) 
+}
+
+
+Jora_Dialr_Summary <- Jora_Dialr_Return %>%
+  mutate(call_date_2 = as.Date(
+                                paste(strtoi(str_match(Jora_Dialr_Return$Call_Date,"[0-9]{4}$")),
+                                      strtoi(str_match(Jora_Dialr_Return$Call_Date,"[0]*([0-9]{1,2})\\-")[,2]),
+                                      strtoi(str_match(Jora_Dialr_Return$Call_Date,"\\-[0]*([0-9]{1,2})\\-")[,2]),
+                                      sep='-')
+                               )
+  ) %>%
+  group_by(Loan_Series_Number,call_date_2) %>%
+  summarise(total.count=n(),
+            count_work = sum(Phone_Type == "Work"),
+            count_home = sum(Phone_Type == "Home"),
+            count_mobile = sum(Phone_Type == "Mobile"),
+            work_invalid = sum(Phone_Type == "Work" & Call_Result == "Invalid Phone Number"),
+            home_invalid = sum(Phone_Type == "Home" & Call_Result == "Invalid Phone Number"),
+            mobile_invalid = sum(Phone_Type == "Mobile" & Call_Result == "Invalid Phone Number")
+            ) 
+
+###--------------------------------------------Join Table---------------------------------------------###
+output <- merge(Jora_Collection, Jora_Dialr_Summary, by.x=c("loan_series_number","file_date"),by.y=c("Loan_Series_Number","call_date_2"),all.x = TRUE)
+write.csv(output,"//thinksas.think.local/SAS Data Files/Portfolio Mgmt/Jora Credit/Internal/JORA Excel Dashboard/2_Input/Jora Dialr/Jora_Dialr_Analysis.csv",row.names=FALSE)
+
+--------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+--------------------------------------------------------------------------------------------------------------------------------------
+######### Reage Combine ########
+## Import Packages
+library(dplyr)     ## Data manipulation package
+library(foreign)   ## Install package foreign
+library(stringr)   ## Subtract part of string
+
+## Set working directory
+setwd("//thinksas.think.local/SAS Data Files/EIM/ManualReage/1-Reage History File")
+
+## Publiuc file names
+file_list <- data.frame(file_name = list.files(pattern="*.csv")) %>%
+    mutate(file_year = strtoi(str_match(file_name,'Reage_([0-9]{4})')[,2]),
+           file_month = strtoi(str_match(file_name,'Reage_\\d*_([0-9]{1,2})')[,2]),
+           file_day = strtoi(str_match(file_name,'Reage_\\d*_\\d*_([0-9]{1,2})')[,2])
+          )
+
+
+## Import & Combine files
+Jora_Reage <- data.frame(LoanNumber = integer(),
+                         file_date = factor())
+
+for (i in 1:nrow(file_list)){
+  temp <- read.csv(file=toString(file_list[i,1]),header = TRUE) %>%
+    select(LoanNumber) %>% 
+    mutate(file_date= as.Date(paste(file_list[i,2],file_list[i,3],file_list[i,4],sep="-")))
+  
+  Jora_Reage <- rbind(Jora_Reage,temp) %>%
+    arrange(LoanNumber,
+            desc(file_date)
+            )
+}
+
+Jora_Reage <- Jora_Reage[!duplicated(Jora_Reage$LoanNumber),]
+
+## Output loans have been reaged
+write.csv(Jora_Reage,"//thinksas.think.local/SAS Data Files/EIM/ManualReage/2-Records/Jora_Reage.csv",row.names=FALSE)
+--------------------------------------------------------------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------------------------------------------------------------
+## Read CSV file##
+
+## Import packages
+library(dplyr)     ## Data manipulation package
+library(foreign) ## Install package foreign
+
+## Set working directory
+setwd("//thinksas.think.local/SAS Data Files/3rd Party Data 2.0/CDE_TPS_CSV/Clarity")
+
+file_list = list.files(pattern="*.csv")
+
+## Import & combine files 
+Jora_Clarity <- data.frame(TF_AppID = factor(),
+                           CF_clearfraudscore = integer(),
+                           CF_crosstabmultiple = numeric(),
+                           CF_rt_ninetydaysago_4 = numeric(),
+                           CBB_SCORE = integer())
+
+for (i in file_list){
+  read_data <- read.csv(file=i,header = TRUE)[,c(2,6497,6498,8509,9582)]
+  Jora_Clarity <- rbind(Jora_Clarity,read_data) %>%
+    filter(!duplicated(TF_AppID))
+}
+Jora_Clarity[is.na(Jora_Clarity)] <- " "
+
+## Output clarity data
+write.csv(Jora_Clarity,"//thinksas.think.local/SAS Data Files/3rd Party Data 2.0/CDE_TPS_CSV/Clarity/For Kevin/Jora_Clarity.csv",row.names=FALSE)
+
+--------------------------------------------------------------------------------------------------------------------------------------
