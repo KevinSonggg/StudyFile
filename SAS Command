@@ -1,1 +1,54 @@
+%macro list_files(dir,ext);
+	%local filrf rc did name i;
+	%let rc=%sysfunc(filename(filrf,&dir));
+	%let did=%sysfunc(dopen(&filrf));
+/*If there no file in the folder with the required file type*/
+	%if &did eq 0 %then
+		%do;
+			%put Directory &dir cannot be open or does not exist;
 
+			%return;
+		%end;
+
+	%if %sysfunc(exist(LIST)) %then
+		%DO;
+			PROC SQL;
+				DROP TABLE LIST;
+			QUIT;
+		%END;
+
+/*Ifthere is filein the folder with the required file type*/
+	%do i = 1 %to %sysfunc(dnum(&did));
+		%let name=%qsysfunc(dread(&did,&i));
+
+		%if %qupcase(%qscan(&name,-1,.)) = %upcase(&ext) %then
+			%DO;
+				%put the name of the file is &name;
+
+				PROC IMPORT OUT=TEMP_&i DATAFILE = "&dir.\&name." dbms=xlsx REPLACE;
+					GETNAMES=YES;
+				RUN;
+				
+				%if %sysfunc(exist(LIST)) %then
+					%DO;
+						PROC APPEND BASE=LIST DATA=TEMP_&i FORCE;
+						RUN;
+					%END;
+					
+				%ELSE
+					%DO;
+						DATA LIST;
+						SET TEMP_&i;
+						RUN;
+					%END;
+
+				PROC SQL;
+					DROP TABLE TEMP_&i;
+				QUIT;
+			%END;
+	%end;
+
+%mend list_files;
+
+/*Change this part*/
+%list_files(\\THINKSAS.THINK.LOCAL\SAS Data Files\Kevin,xlsx);
