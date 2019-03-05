@@ -52,3 +52,39 @@
 
 /*Change this part*/
 %list_files(\\THINKSAS.THINK.LOCAL\SAS Data Files\Kevin,xlsx);
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+DATA Zip_Mapping;
+SET IOVATION_TRIM(KEEP=Application_Unique_ID Real_Latitude Real_Longitude);
+	_Lat = Real_Latitude; 
+	_Lon = Real_Longitude;
+	IF Real_Latitude <> . THEN
+		DO _n_ = 1 TO nobs_2;
+			SET Geolocation_List (KEEP=Latitude Longitude Zipcode) POINT=_n_ NOBS=nobs_2 END=EOF;
+			RETAIN DISTANCE Zip;
+				IF _n_ = 1 THEN 
+					DO; 
+						DISTANCE = (_Lat - Latitude)**2 + (_Lon - Longitude)**2;
+						Zip = Zipcode;		
+					END;
+				ELSE 
+					IF DISTANCE > (_Lat - Latitude)**2 + (_Lon - Longitude)**2 THEN 
+						DO; 
+							DISTANCE = (_Lat - Latitude)**2 + (_Lon - Longitude)**2;
+							Zip = Zipcode;
+						END;
+				IF _n_ = EOF THEN 
+					DO;
+						STOP;
+					END;
+		END;
+	ELSE 
+		DO;
+			DISTANCE = .;
+			Zip = .;
+		END;
+	OUTPUT;
+RUN;
+
