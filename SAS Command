@@ -88,3 +88,44 @@ SET IOVATION_TRIM(KEEP=Application_Unique_ID Real_Latitude Real_Longitude);
 	OUTPUT;
 RUN;
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+DATA IPD_Velocity_Output;
+SET IPD_Velocity;
+RETAIN _COUNT _App_Create_DT _IPD_Zip;
+	_ApplicationUniqueId = ApplicationUniqueId;
+	_IPD_Zip = IPD_Zip;
+	_App_Create_DT = App_Create_DT;
+	_CA_FLAG = CA_FLAG;
+
+	IF IPD_Zip <> . THEN 
+
+		DO _n_ = 1 TO nobs_2;
+			SET PreFraud POINT=_n_ NOBS=nobs_2 END=EOF;
+				IF _n_ = 1 THEN
+					DO;
+						_COUNT = 0;
+					END;
+				IF INTCK('HOUR', App_Create_DT, _App_Create_DT) <= 48 AND INTCK('HOUR', App_Create_DT, _App_Create_DT) >= 0 AND IPD_Zip = _IPD_Zip THEN
+					_COUNT = _COUNT + 1;
+				IF _n_ = EOF THEN 
+					DO;
+						STOP;
+					END;
+		END;	
+	ELSE 
+		DO;
+			_COUNT = 0;
+		END;
+
+	OUTPUT;
+
+KEEP _ApplicationUniqueId _App_Create_DT _IPD_Zip _CA_FLAG _COUNT;
+RENAME 
+	_ApplicationUniqueId = ApplicationUniqueId
+	_App_Create_DT = App_Create_DT
+	_IPD_Zip = IPD_Zip
+	_CA_FLAG = CA_FLAG
+	_COUNT = Velocity_48;
+RUN;						
